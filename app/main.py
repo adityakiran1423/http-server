@@ -3,8 +3,7 @@ import socket
 def main():
     server_socket = socket.create_server(("localhost", 4221), reuse_port=True)
     (connection, address) = server_socket.accept()
-    # connection.send(b"HTTP/1.1 200 OK\r\n\r\n")
-    data = socket.recv(1024).decode(encoding='utf-8').splitlines()
+    data = connection.recv(1024).decode(encoding='utf-8').splitlines()
     # index=data.index("/")
     # for i in range(index,len(data)):
     #     if i==" ":
@@ -15,6 +14,8 @@ def main():
         connection.send(b"HTTP/1.1 200 OK\r\n\r\n")
     else:
         connection.send(b"HTTP/1.1 404 Not Found\r\n\r\n")
+    
+    connection.send(b"HTTP/1.1 200 OK\r\n\r\n")
 
 
 
