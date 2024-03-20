@@ -18,7 +18,7 @@ def main():
     temp=start_line.split(" ")
     content=temp[1]
     content_length=len(content)
-    content=content[5:len(content_length)] # removing echo from the content
+    content=content[5:content_length] # removing echo from the content
 
     if path[1] == "/":
         connection.send(b"HTTP/1.1 200 OK\r\n\r\n")
