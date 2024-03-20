@@ -4,7 +4,7 @@ def main():
     server_socket = socket.create_server(("localhost", 4221), reuse_port=True)
     (connection, address) = server_socket.accept()
     # connection.send(b"HTTP/1.1 200 OK\r\n\r\n")
-    data = socket.recv(4096).decode(encoding='utf-8').slpitlines()
+    data = socket.recv(1024).decode(encoding='utf-8').slpitlines()
     # index=data.index("/")
     # for i in range(index,len(data)):
     #     if i==" ":
