@@ -12,7 +12,7 @@ def main():
     content=http_path[6:]
     content_length=len(content)
 
-    _,user_agent=data[2].split(" ")
+    _,user_agent=data[2].split(": ")
     length_user_agent=len(user_agent)
 
     if http_path== "/":
