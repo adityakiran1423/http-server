@@ -6,21 +6,20 @@ def main():
     (connection, address) = server_socket.accept()
     data = connection.recv(1024).decode(encoding="utf-8").splitlines()
 
-    path = data[0].split(" ") 
+    path = data[0].split(" ") # list containing start line contents
+    http_path=path[1]
 
-    start_line=data[0] #extracting start line
-    temp=start_line.split(" ")
-    content=temp[1]
+    content=http_path[6:]
     content_length=len(content)
-    content=content[5:content_length] # removing echo from the content
 
-    if path[1] == "/":
+    if http_path== "/":
         connection.send(b"HTTP/1.1 200 OK\r\n\r\n")
 
-    elif path[1].startswith("/echo/"):
+    elif http_path.startswith("/echo/"):
         data_to_send="HTTP/1.1 200 OK"+"Content-Type: text/plain"+"Content-Length: "+str(content_length)+content
         connection.sendall(data_to_send.encode())
         #connection.send(f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: {content_length}\r\n \n {content}\r\n\r\n")
+
     else:
         connection.send(b"HTTP/1.1 404 Not Found\r\n\r\n")
 
