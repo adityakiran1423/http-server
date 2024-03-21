@@ -19,7 +19,7 @@ def main():
 
     elif path[1].startswith("/echo/"):
         data_to_send="HTTP/1.1 200 OK"+"Content-Type: text/plain"+"Content-Length: "+str(content_length)+content
-        connection.sendall(data_to_send)
+        connection.sendall(data_to_send.encode())
         #connection.send(f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: {content_length}\r\n \n {content}\r\n\r\n")
     else:
         connection.send(b"HTTP/1.1 404 Not Found\r\n\r\n")
