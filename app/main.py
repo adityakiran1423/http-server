@@ -19,8 +19,13 @@ def main():
         connection.send(b"HTTP/1.1 200 OK\r\n\r\n")
 
     elif http_path.startswith("/echo/"):
-        data_to_send="HTTP/1.1 200 OK"+"\n"+"Content-Type: text/plain"+"\n"+"Content-Length: "+str(content_length)+"\n"+"\n"+content+"\n"
-        connection.sendall(data_to_send.encode())
+        if http_path=="/user-agent":
+            data_to_send="HTTP/1.1 200 OK"+"\n"+"Content-Type: text/plain"+"\n"+"Content-Length: "+str(length_user_agent)+"\n"+"\n"+user_agent+"\n"
+            connection.sendall(data_to_send.encode())
+        else:
+            data_to_send="HTTP/1.1 200 OK"+"\n"+"Content-Type: text/plain"+"\n"+"Content-Length: "+str(content_length)+"\n"+"\n"+content+"\n"
+            connection.sendall(data_to_send.encode())
+        
         #connection.send(f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: {content_length}\r\n \n {content}\r\n\r\n")
 
     else:
