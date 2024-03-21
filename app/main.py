@@ -21,7 +21,8 @@ def main():
     content=content[5:content_length] # removing echo from the content
 
     connection.send(b"HTTP/1.1 200 OK\r\n\r\n")
-    connection.send(b"HTTP/1.1 404 Not Found\r\n\r\n")
+
+    #connection.send(b"HTTP/1.1 404 Not Found\r\n\r\n")
 
     if path[1] == "/":
         connection.send(b"HTTP/1.1 200 OK\r\n\r\n")
