@@ -22,8 +22,8 @@ def main():
 
     if path[1] == "/":
         connection.send(b"HTTP/1.1 200 OK\r\n\r\n")
-    elif path[1]!="/":
-        connection.send(b"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: '{}'.format(content_length, encoding='utf-8')\r\n \n {}.format(content, encoding='utf-8')\r\n\r\n")
+    elif path[1]!="/" and len(path[1])>1 :
+        connection.send(b"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: f{content_length}\r\n \n f{content}\r\n\r\n")
     else:
         connection.send(b"HTTP/1.1 404 Not Found\r\n\r\n")
 
