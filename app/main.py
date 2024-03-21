@@ -20,15 +20,12 @@ def main():
     content_length=len(content)
     content=content[5:content_length] # removing echo from the content
 
-    connection.send(b"HTTP/1.1 200 OK\r\n\r\n")
-    
-    if path[1]!="/":
-        connection.send(b"HTTP/1.1 404 Not Found\r\n\r\n")
-
     if path[1] == "/":
         connection.send(b"HTTP/1.1 200 OK\r\n\r\n")
-    elif path[1]!="/" and len(path[1])>1 :
-        connection.send(b"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: f{content_length}\r\n \n f{content}\r\n\r\n")
+
+    elif path[1].startswith("/echo/"):
+
+        connection.send(f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: {content_length}\r\n \n {content}\r\n\r\n")
     else:
         connection.send(b"HTTP/1.1 404 Not Found\r\n\r\n")
 
