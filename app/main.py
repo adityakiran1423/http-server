@@ -18,7 +18,7 @@ def main():
         connection.send(b"HTTP/1.1 200 OK\r\n\r\n")
 
     elif path[1].startswith("/echo/"):
-        data_to_send="HTTP/1.1 200 OK"+"Content-Type: text/plain"+"Content-Length: "+content_length+content
+        data_to_send="HTTP/1.1 200 OK"+"Content-Type: text/plain"+"Content-Length: "+str(content_length)+content
         connection.sendall(data_to_send)
         #connection.send(f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: {content_length}\r\n \n {content}\r\n\r\n")
     else:
