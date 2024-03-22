@@ -49,9 +49,12 @@ async def main() -> None:
 
 async def accept_connection(server_socket) -> None:
     (connection, address) = server_socket.accept()
-    recieve_data(connection)
+    task=asyncio.create_task(recieve_data(connection))
 
-def recieve_data(connection):
+    await task
+    # recieve_data(connection)
+
+async def recieve_data(connection):
     data = connection.recv(1024).decode(encoding="utf-8").splitlines()
     path = data[0].split(" ")  # list containing start line contents
     http_path = path[1]
