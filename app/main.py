@@ -3,7 +3,7 @@ import socket
 from _thread import *
 import threading
 
-concurrent_sever=threading.lock()
+concurrent_sever=threading.Lock()
 
 
 def server(data, connection)->None:
