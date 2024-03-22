@@ -2,11 +2,13 @@ import socket
 import asyncio
 
 
-def main() -> None:
+async def main() -> None:
     server_socket = socket.create_server(("localhost", 4221), reuse_port=True) # creating intial server socket
-    accept_connection(server_socket)
+    (connection, address) = server_socket.accept()
+    task=asyncio.create_task(recieve_data(connection))
 
-    # (connection, address) = server_socket.accept()
+    # recieve_data(connection)
+    await task
     # data = connection.recv(1024).decode(encoding="utf-8").splitlines()
 
     # path = data[0].split(" ")  # list containing start line contents
@@ -46,12 +48,6 @@ def main() -> None:
     # else:
     #     connection.send(b"HTTP/1.1 404 Not Found\r\n\r\n")
 
-async def accept_connection(server_socket) -> None:
-    (connection, address) = server_socket.accept()
-    task=asyncio.create_task(recieve_data(connection))
-
-    await task
-    # recieve_data(connection)
 
 async def recieve_data(connection):
     data = connection.recv(1024).decode(encoding="utf-8").splitlines()
