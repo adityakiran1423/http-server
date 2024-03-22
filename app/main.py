@@ -2,7 +2,8 @@ import socket
 import threading
 
 
-def server(data, connection)->None:
+def server(connection)->None:
+    data = connection.recv(1024).decode(encoding="utf-8").splitlines()
     path = data[0].split(" ")  # list containing start line contents
     http_path = path[1]
 
@@ -47,9 +48,7 @@ def main() -> None:
 
     while True:
         (connection, address) = server_socket.accept()
-        data = connection.recv(1024).decode(encoding="utf-8").splitlines()
-
-        thread = threading.Thread(target=server, args=(data, connection))
+        thread = threading.Thread(target=server, args=(connection,))
         thread.start()
 
 
