@@ -5,7 +5,7 @@ import asyncio
 async def main() -> None:
     server_socket = socket.create_server(("localhost", 4221), reuse_port=True) # creating intial server socket
     task=asyncio.create_task(server(server_socket))
-    
+
     # server(server_socket)
 
     await task
@@ -51,7 +51,6 @@ async def server(server_socket):
     else:
         connection.send(b"HTTP/1.1 404 Not Found\r\n\r\n")
 
-    pass
 
 
 if __name__ == "__main__":
