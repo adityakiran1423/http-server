@@ -1,16 +1,13 @@
 import socket
+
+from _thread import *
 import threading
 
+concurrent_sever=threading.lock()
 
-def main() -> None:
 
-    done=False
-
-    server_socket = socket.create_server(("localhost", 4221), reuse_port=True) # creating intial server socket
-    while not done:
-        (connection, address) = server_socket.accept()
-
-        data = connection.recv(1024).decode(encoding="utf-8").splitlines()
+def server(data, connection)->None:
+    while True:
         path = data[0].split(" ")  # list containing start line contents
         http_path = path[1]
 
@@ -48,9 +45,19 @@ def main() -> None:
         else:
             connection.send(b"HTTP/1.1 404 Not Found\r\n\r\n")
 
-threading.Thread(target=main).start()
 
-done=True
+def main() -> None:
+
+    server_socket = socket.create_server(("localhost", 4221), reuse_port=True) # creating intial server socket
+
+    while True:
+        (connection, address) = server_socket.accept()
+        data = connection.recv(1024).decode(encoding="utf-8").splitlines()
+
+        concurrent_sever.acquire()
+        start_new_thread(server, (data,connection,))
+
+
 
 if __name__ == "__main__":
     main()
