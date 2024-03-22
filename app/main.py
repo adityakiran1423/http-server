@@ -2,11 +2,10 @@ import socket
 import asyncio
 
 
-async def main() -> None:
+def main() -> None:
     server_socket = socket.create_server(("localhost", 4221), reuse_port=True) # creating intial server socket
-    task=asyncio.create_task(accept_connection(server_socket))
+    accept_connection(server_socket)
 
-    await task
     # (connection, address) = server_socket.accept()
     # data = connection.recv(1024).decode(encoding="utf-8").splitlines()
 
