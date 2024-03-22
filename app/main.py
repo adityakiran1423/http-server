@@ -10,7 +10,7 @@ def server(connection)->None:
     content = http_path[6:]
     content_length = len(content)
 
-    _, user_agent = data[2].split(" ")
+    random, user_agent = data[2].split(" ")
     length_user_agent = len(user_agent)
 
     if http_path == "/":
@@ -22,7 +22,7 @@ def server(connection)->None:
             + "Content-Type: text/plain"+ "\n"
             + "Content-Length: " + str(content_length)+ "\n\n"
             # + "\n"
-            + content+ "\n"
+            + content+ "\r\n"
         )
         connection.sendall(data_to_send.encode())
 
@@ -32,7 +32,7 @@ def server(connection)->None:
             + "Content-Type: text/plain"+ "\n"
             + "Content-Length: " + str(length_user_agent)+ "\n\n"
             # + "\n"
-            + user_agent + "\n"
+            + user_agent + "\r\n"
         )
         connection.sendall(data_to_send.encode())
 
