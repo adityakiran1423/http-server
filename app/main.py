@@ -10,8 +10,14 @@ def server(connection)->None:
     content = http_path[6:]
     content_length = len(content)
 
-    random, user_agent = data[2].split(" ")
-    length_user_agent = len(user_agent)
+    # random, user_agent = data[2].split(" ")
+    # length_user_agent = len(user_agent)
+
+    user_agent_parts = data[2].split(" ")
+    if len(user_agent_parts) < 2:
+        user_agent = ""
+    else:
+        _, user_agent = user_agent_parts
 
     if http_path == "/":
         connection.send(b"HTTP/1.1 200 OK\r\n\r\n")
@@ -30,7 +36,7 @@ def server(connection)->None:
         data_to_send = (
             "HTTP/1.1 200 OK"+ "\n"
             + "Content-Type: text/plain"+ "\n"
-            + "Content-Length: " + str(length_user_agent)+ "\n\n"
+            + "Content-Length: " + str(len(user_agent))+ "\n\n"
             # + "\n"
             + user_agent + "\r\n"
         )
