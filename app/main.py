@@ -57,7 +57,7 @@ def server(connection)->None:
         location=os.path.join(directory_path, filename)
         print(location)
         if os.path.exists(location):
-            with open(location, "rb") as file:
+            with open(location, "r") as file:
                 file_content = file.read()
             
             response = f"HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: {len(file_content)}\r\n\r\n{file_content}\r\n"
