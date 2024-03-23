@@ -15,7 +15,7 @@ def server(connection)->None:
     # random, user_agent = data[2].split(" ")
     # length_user_agent = len(user_agent)
 
-    directory_path=sys.argv[1]
+    directory_path=sys.argv[0]
 
     user_agent_parts = data[2].split(" ")
     if len(user_agent_parts) < 2:
