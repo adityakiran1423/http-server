@@ -48,7 +48,7 @@ def server(connection)->None:
 
     # connection.send(f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: {content_length}\r\n \n {content}\r\n\r\n")
         
-    elif http_path.beginswith("/files/"):
+    elif http_path.startswith("/files/"):
         filename=http_path[7:]
         if os.path.exists(directory_path):
             connection.send(b"HTTP/1.1 200 OK\r\n\r\n")
