@@ -67,7 +67,7 @@ def server(connection)->None:
             )
             response = f"HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: {len(file_content)}\r\n\r\n{file_content}\r\n"
             #connection.send(b"HTTP/1.1 200 OK\r\n\r\n")
-            connection.send(response)
+            connection.send(response.encode())
             #connection.sendall(b"")
         else:
             connection.send(b"HTTP/1.1 404 Not Found\r\n\r\n")
