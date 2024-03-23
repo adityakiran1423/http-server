@@ -52,19 +52,35 @@ def server(connection)->None:
         
     # /tmp/data/codecrafters.io/http-server-tester/
 
-    elif http_path.startswith("/files/"):
-        filename=http_path[7:]
-        location=os.path.join(directory_path, filename)
-        print(location)
-        response="HTTP/1.1 404 Not Found \r\n\r\n"
-        if os.path.exists(location):
-            with open(location, "r") as file:
-                file_content = file.read()
-                response = f"HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: {len(file_content)}\r\n\r\n{file_content}\r\n"
+    # elif http_path.startswith("/files/"):
+    #     filename=http_path[7:]
+    #     location=os.path.join(directory_path, filename)
+    #     print(location)
+    #     response="HTTP/1.1 404 Not Found \r\n\r\n"
+    #     if os.path.exists(location):
+    #         with open(location, "r") as file:
+    #             file_content = file.read()
+    #             response = f"HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: {len(file_content)}\r\n\r\n{file_content}\r\n"
 
-        connection.sendall(response.encode())
+    #     connection.sendall(response.encode())
+    elif path.startswith("/files/"):
+        directory = ""
+        if sys.argv[1] == "--directory":
+            directory = sys.argv[2]
 
+        filename = path[len("/files/") :]
+        file_path = os.path.join(directory, filename)
 
+        response = "HTTP/1.1 404 Not Found \r\n\r\n"
+
+        if os.path.exists(file_path):
+            with open(file_path, "r") as file:
+                fileContent = file.read()
+                response = f"HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: {len(fileContent)}\r\n\r\n{fileContent}\r\n"
+                
+        print(response)
+        connection.send(response.encode())
+        
     else:
         connection.send(b"HTTP/1.1 404 Not Found\r\n\r\n")
 
