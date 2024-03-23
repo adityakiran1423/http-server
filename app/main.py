@@ -58,7 +58,7 @@ def server(connection)->None:
         print(location)
         if os.path.exists(location):
             with open(location, "rb") as file:
-                file_content = file.read().replace("\n", "")
+                file_content = file.read()
             data_to_send=(
                 "HTTP/1.1 200 OK"+"\r\n"
                 + "Content-Type: application/octet-stream"+ "\r\n"
