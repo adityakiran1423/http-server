@@ -59,12 +59,7 @@ def server(connection)->None:
         if os.path.exists(location):
             with open(location, "rb") as file:
                 file_content = file.read()
-            data_to_send=(
-                "HTTP/1.1 200 OK"+"\r\n"
-                + "Content-Type: application/octet-stream"+ "\r\n"
-                + "Content-Length: " + str(len(file_content)) + "\r\n"
-                + str(file_content) + "\r\n\r\n"
-            )
+            
             response = f"HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: {len(file_content)}\r\n\r\n{file_content}\r\n"
             #connection.send(b"HTTP/1.1 200 OK\r\n\r\n")
             connection.send(response.encode())
