@@ -81,6 +81,7 @@ def server(connection)->None:
     else:
         connection.send(b"HTTP/1.1 404 Not Found\r\n\r\n")
 
+    connection.close()
 
 def main() -> None:
 
