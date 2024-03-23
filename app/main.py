@@ -15,7 +15,9 @@ def server(connection)->None:
     # random, user_agent = data[2].split(" ")
     # length_user_agent = len(user_agent)
 
-    directory_path=sys.argv[0]
+    # directory_path=sys.argv[0] -> uses python command argv not shell
+    directory_path="/tmp/data/codecrafters.io/http-server-tester/"
+
 
     user_agent_parts = data[2].split(" ")
     if len(user_agent_parts) < 2:
@@ -48,9 +50,11 @@ def server(connection)->None:
 
     # connection.send(f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: {content_length}\r\n \n {content}\r\n\r\n")
         
+    # /tmp/data/codecrafters.io/http-server-tester/
+
     elif http_path.startswith("/files/"):
         filename=http_path[7:]
-        location=str(directory_path)+str(filename)
+        location=str(directory_path)+"/"+str(filename)
         with open(location, "r") as file:
             file_content = file.read().replace("\n", "")
         if os.path.exists(directory_path):
