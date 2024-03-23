@@ -1,5 +1,7 @@
 import socket
 import threading
+import os
+import sys
 
 
 def server(connection)->None:
@@ -12,6 +14,8 @@ def server(connection)->None:
 
     # random, user_agent = data[2].split(" ")
     # length_user_agent = len(user_agent)
+
+    directory_path=sys.argv[2]
 
     user_agent_parts = data[2].split(" ")
     if len(user_agent_parts) < 2:
@@ -43,6 +47,13 @@ def server(connection)->None:
         connection.sendall(data_to_send.encode())
 
     # connection.send(f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: {content_length}\r\n \n {content}\r\n\r\n")
+        
+    elif http_path.beginswith("/files/"):
+        filename=http_path[7:]
+        if os.path.exists(directory_path):
+            connection.send(b"HTTP/1.1 200 OK\r\n\r\n")
+        else:
+            connection.send(b"HTTP/1.1 404 Not Found\r\n\r\n")
 
     else:
         connection.send(b"HTTP/1.1 404 Not Found\r\n\r\n")
