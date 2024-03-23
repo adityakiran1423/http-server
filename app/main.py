@@ -54,15 +54,15 @@ def server(connection)->None:
 
     elif http_path.startswith("/files/"):
         filename=http_path[7:]
-        location=str(directory_path)+"/"+str(filename)
+        location=os.path.join(directory_path, filename)
         print(location)
-        with open(location, "r") as file:
-            file_content = file.read().replace("\n", "")
         if os.path.exists(location):
+            with open(location, "rb") as file:
+                file_content = file.read().replace("\n", "")
             data_to_send=(
-                "HTTP/1.1 200 OK"+"\n"
-                + "Content-Type: application/octet-stream"+ "\n"
-                # + "Content-Length: "
+                "HTTP/1.1 200 OK"+"\r\n"
+                + "Content-Type: application/octet-stream"+ "\r\n"
+                + "Content-Length: " + len(file_content) + "\r\n"
                 + str(file_content) + "\r\n\r\n"
             )
             #connection.send(b"HTTP/1.1 200 OK\r\n\r\n")
