@@ -7,6 +7,7 @@ import sys
 def server(connection)->None:
     data = connection.recv(1024).decode(encoding="utf-8").splitlines()
     path = data[0].split(" ")  # list containing start line contents
+    post=path[0]
     http_path = path[1]
 
     content = http_path[6:]
@@ -48,21 +49,6 @@ def server(connection)->None:
         )
         connection.sendall(data_to_send.encode())
 
-    # connection.send(f"HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: {content_length}\r\n \n {content}\r\n\r\n")
-        
-    # /tmp/data/codecrafters.io/http-server-tester/
-
-    # elif http_path.startswith("/files/"):
-    #     filename=http_path[7:]
-    #     location=os.path.join(directory_path, filename)
-    #     print(location)
-    #     response="HTTP/1.1 404 Not Found \r\n\r\n"
-    #     if os.path.exists(location):
-    #         with open(location, "r") as file:
-    #             file_content = file.read()
-    #             response = f"HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: {len(file_content)}\r\n\r\n{file_content}\r\n"
-
-    #     connection.sendall(response.encode())
     elif http_path.startswith("/files/"):
         directory = ""
         if sys.argv[1] == "--directory":
@@ -77,7 +63,20 @@ def server(connection)->None:
         print(response)
 
         connection.send(response.encode())
-        
+    
+    elif post=="POST":
+        file_content = data.split("\r\n\r\n")[-1]
+        directory = ""
+        if sys.argv[1] == "--directory":
+            directory = sys.argv[2]
+        filename = http_path[len("/files/") :]
+        file_path = os.path.join(directory, filename)
+        with open(file_path, "w") as file:
+            file.write(file_content)
+
+        response = "HTTP/1.1 201 Created \r\n\r\n"
+        connection.send(response.encode())
+
     else:
         connection.send(b"HTTP/1.1 404 Not Found\r\n\r\n")
 
