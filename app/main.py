@@ -5,7 +5,10 @@ import sys
 
 
 def server(connection)->None:
-    data = connection.recv(1024).decode(encoding="utf-8").splitlines()
+    #data = connection.recv(1024).decode(encoding="utf-8").splitlines()
+    data = connection.recv(1024).decode(encoding="utf-8")
+    post_data=data
+    data=data.splitlines()
     path = data[0].split(" ")  # list containing start line contents
     post=path[0]
     http_path = path[1]
@@ -65,7 +68,7 @@ def server(connection)->None:
         connection.send(response.encode())
     
     elif post=="POST":
-        file_content = data.split("\r\n\r\n")[-1]
+        file_content = post_data.split("\r\n\r\n")[-1]
         directory = ""
         if sys.argv[1] == "--directory":
             directory = sys.argv[2]
