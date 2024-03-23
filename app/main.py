@@ -62,7 +62,7 @@ def server(connection)->None:
             data_to_send=(
                 "HTTP/1.1 200 OK"+"\r\n"
                 + "Content-Type: application/octet-stream"+ "\r\n"
-                + "Content-Length: " + len(file_content) + "\r\n"
+                + "Content-Length: " + str(len(file_content)) + "\r\n"
                 + str(file_content) + "\r\n\r\n"
             )
             #connection.send(b"HTTP/1.1 200 OK\r\n\r\n")
