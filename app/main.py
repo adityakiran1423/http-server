@@ -49,7 +49,7 @@ def server(connection)->None:
         )
         connection.sendall(data_to_send.encode())
 
-    elif http_path.startswith("/files/"):
+    elif http_path.startswith("/files/") and post!="POST":
         directory = ""
         if sys.argv[1] == "--directory":
             directory = sys.argv[2]
@@ -75,6 +75,7 @@ def server(connection)->None:
             file.write(file_content)
 
         response = "HTTP/1.1 201 Created \r\n\r\n"
+
         connection.send(response.encode())
 
     else:
