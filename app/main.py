@@ -50,8 +50,19 @@ def server(connection)->None:
         
     elif http_path.startswith("/files/"):
         filename=http_path[7:]
+        location=str(directory_path)+str(filename)
+        with open(location, "r") as file:
+            file_content = file.read().replace("\n", "")
         if os.path.exists(directory_path):
-            connection.send(b"HTTP/1.1 200 OK\r\n\r\n")
+            data_to_send=(
+                "HTTP/1.1 200 OK"+"\n"
+                + "Content-Type: application/octet-stream"+ "\n"
+                # + "Content-Length: "
+                + str(file_content) + "\r\n\r\n"
+            )
+            #connection.send(b"HTTP/1.1 200 OK\r\n\r\n")
+            connection.send(data_to_send.encode())
+            #connection.sendall(b"")
         else:
             connection.send(b"HTTP/1.1 404 Not Found\r\n\r\n")
 
