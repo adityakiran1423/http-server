@@ -5,22 +5,16 @@ import sys
 
 
 def server(connection)->None:
-    #data = connection.recv(1024).decode(encoding="utf-8").splitlines()
+
     data = connection.recv(1024).decode(encoding="utf-8")
     post_data=data
     data=data.splitlines()
-    path = data[0].split(" ")  # list containing start line contents
+    path = data[0].split(" ")  
     post=path[0]
     http_path = path[1]
 
     content = http_path[6:]
     content_length = len(content)
-
-    # random, user_agent = data[2].split(" ")
-    # length_user_agent = len(user_agent)
-
-    # directory_path=sys.argv[0] -> uses python command argv not shell
-    #directory_path="/tmp/data/codecrafters.io/http-server-tester/"
 
 
     user_agent_parts = data[2].split(" ")
